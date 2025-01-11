@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func Run(connectionString string) {
+func Run(connectionString, proxyServer string) {
 	wg := sync.WaitGroup{}
 
 	// 主 goroutine 结束时, 所有子 goroutine 也结束
@@ -30,7 +30,7 @@ func Run(connectionString string) {
 	// 使用gin创建一个http服务器
 	server := &http.Server{
 		Addr:    connectionString,
-		Handler: NewRouter(),
+		Handler: NewRouter(proxyServer),
 	}
 
 	// 启动服务监听和优雅退出，退出是直接shutdown服务器，不等待业务正常终止
